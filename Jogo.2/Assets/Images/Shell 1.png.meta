@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5158cac6b6d7469418a9f52d18aa8131
+guid: 19a1bfff05969584e999d3d3a8ef3f8f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6190023480459407602
-    second: "Colet\xE1vel (3)_0"
+      213: 6099144182141006646
+    second: Shell 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Colet\xE1vel (3)_0"
+      name: Shell 1_0
       rect:
         serializedVersion: 2
-        x: 834
-        y: 388
-        width: 256
-        height: 243
+        x: 774
+        y: 504
+        width: 214
+        height: 207
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e0fc3efc07e981aa0800000000000000
-      internalID: -6190023480459407602
+      spriteID: 633b76aa15384a450800000000000000
+      internalID: 6099144182141006646
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "Colet\xE1vel (3)_0": -6190023480459407602
+      Shell 1_0: 6099144182141006646
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
