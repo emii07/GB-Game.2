@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
     private SD_Serial _sd_serial;
 
     // Margem de tolerância para movimentação (zona morta)
-    public float renge = 10000;
+    public float renge = 10;
 
     // Peso calibrado do jogador
     public float PesoCalibrado = 0;
@@ -116,23 +116,45 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // Exemplo de leitura direta de um sensor da SD Balance
-        if (SD_SerialManager.Instance != null && SD_SerialManager.Instance.A > 0f)
+        // 1. Prioridade de controle: se não houver serial conectada, tenta balança Wii, senão Teclado
+        if (SD_Serial._connected) 
         {
-            float valor = SD_SerialManager.Instance.A;
+            SDBalanceMove();
         }
-
-        // Decide qual tipo de controle será usado
-        if (SD_Serial._connected == false && manualMode)
+        else if (Wii.IsActive(remoteIndex))
         {
-            // Controle por teclado
+            NintendoBalanceBoardMove();
+        }
+        else if (manualMode)
+        {
             KeyboardMove();
+        }
+    }
+
+// Corrija o SDBalanceMove para usar a variável 'movement'
+    void SDBalanceMove()
+    {
+        if (_sd_serial == null) return;
+
+        PesoCalibrado = _sd_serial.P;
+        Esquerda = (_sd_serial.A + _sd_serial.C);
+        Direita = (_sd_serial.B + _sd_serial.D);
+
+        float threshold = (PesoCalibrado / 2) + renge;
+
+        if (Esquerda > threshold)
+        {
+            movement = new Vector2(-1, 0);
+            if (facingRight) Flip();
+        }
+        else if (Direita > threshold)
+        {
+            movement = new Vector2(1, 0);
+            if (!facingRight) Flip();
         }
         else
         {
-            // Controle por SD Balance
-            SDBalanceMove();
-            //NintendoBalanceBoardMove();
+            movement = Vector2.zero;
         }
     }
 
@@ -258,32 +280,7 @@ public class Player : MonoBehaviour
     // CONTROLE POR SD BALANCE
     // =========================
 
-    void SDBalanceMove()
-    {
-        // Movimento baseado no deslocamento de peso
-        if (_sd_serial != null)
-        {
-            PesoCalibrado = _sd_serial.P;
-
-            // Soma dos sensores do lado esquerdo
-            Esquerda = (_sd_serial.A + _sd_serial.C);
-
-            // Soma dos sensores do lado direito
-            Direita = (_sd_serial.B + _sd_serial.D);
-
-            // Move para a esquerda
-            if (Esquerda > (PesoCalibrado / 2 + renge))
-            {
-                transform.position += Vector3.left * speed * Time.deltaTime;
-            }
-
-            // Move para a direita
-            if (Direita > (PesoCalibrado / 2 + renge))
-            {
-                transform.position += Vector3.right * speed * Time.deltaTime;
-            }
-        }
-    }
+    
 
     // =========================
     // CONTROLE POR WII BALANCE BOARD
