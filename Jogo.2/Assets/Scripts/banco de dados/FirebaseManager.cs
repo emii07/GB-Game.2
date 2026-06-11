@@ -3,7 +3,7 @@ using Firebase.Database;
 using UnityEngine;
 using System;
 
-// Criamos uma classe simples para organizar os dados da partida
+// organizão dos dados da partida
 [Serializable]
 public class DadosSessao {
     public int pontuacao;
@@ -31,7 +31,7 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
-    // ESTA É A FUNÇÃO PRA CHAMAR NO FIM DO JOGO
+    // função pra chamar no fim do jogo
     public void SalvarPartida(int pontos, float oscilacao) {
         if (reference == null) return;
 
