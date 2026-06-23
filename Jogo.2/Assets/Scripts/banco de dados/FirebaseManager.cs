@@ -3,7 +3,6 @@ using Firebase.Database;
 using UnityEngine;
 using System;
 
-// organizão dos dados da partida
 [Serializable]
 public class DadosSessao {
     public int pontuacao;
@@ -21,6 +20,11 @@ public class FirebaseManager : MonoBehaviour
 {
     DatabaseReference reference;
 
+    [Header("Dados do Teste")]
+    public string idPaciente = "tulio_delmiro";
+    public int pontosParaSalvar = 150;
+    public float oscilacaoParaSalvar = 1.45f;
+
     void Start() {
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
             var dependencyStatus = task.Result;
@@ -31,24 +35,26 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
-    // função pra chamar no fim do jogo
-    public void SalvarPartida(int pontos, float oscilacao) {
-        if (reference == null) return;
+    public void SalvarPartida() {
+        if (reference == null) {
+            Debug.LogError("Firebase ainda não inicializou!");
+            return;
+        }
 
-        // Cria um objeto com os dados atuais
-        DadosSessao novaSessao = new DadosSessao(pontos, oscilacao);
-
-        // Transforma em JSON (formato que o Firebase entende)
+        DadosSessao novaSessao = new DadosSessao(pontosParaSalvar, oscilacaoParaSalvar);
         string json = JsonUtility.ToJson(novaSessao);
 
-        // Cria um ID único para cada partida (baseado no tempo) para não apagar a anterior
-        string key = reference.Child("sessoes").Push().Key;
+        string key = reference.Child("jogadores").Child(idPaciente).Child("historico_sessoes").Push().Key;
 
-        // Salva no banco de dados dentro da pasta "sessoes"
-        reference.Child("sessoes").Child(key).SetRawJsonValueAsync(json).ContinueWith(task => {
-            if (task.IsCompleted) {
-                Debug.Log("Sessão salva com sucesso no Firebase!");
-            }
-        });
-    }
+        reference.Child("jogadores")
+            .Child(idPaciente)
+            .Child("historico_sessoes")
+            .Child(key)
+            .SetRawJsonValueAsync(json)
+            .ContinueWith(task => {
+                if (task.IsCompleted) {
+                    Debug.Log("Sucesso! Dados guardados no Firebase.");
+                }
+            });
+    }                                                                                                                                                                      
 }

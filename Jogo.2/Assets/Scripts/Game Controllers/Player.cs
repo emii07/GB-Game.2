@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
                 FirebaseManager firebase = FindObjectOfType<FirebaseManager>();
                 if (firebase != null)
                 {
-                    firebase.SalvarPartida(countShell, 0.45f);
+                    firebase.SalvarPartida (countShell, 0.45f);
                 }
                 else
                 {
