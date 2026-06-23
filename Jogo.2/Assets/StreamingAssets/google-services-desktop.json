@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "370093156891",
+    "firebase_url": "https://banco-de-dadosgamebalance-default-rtdb.firebaseio.com",
+    "project_id": "banco-de-dadosgamebalance",
+    "storage_bucket": "banco-de-dadosgamebalance.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370093156891:android:166c63bf7696866ce126be",
+        "android_client_info": {
+          "package_name": "com.Wemily.GameBalance"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYE33deymassAmQg5uC2-TbreL2VDhK2M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
